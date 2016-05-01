@@ -3,7 +3,9 @@ package com.zencoder.bucketdrops;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -31,5 +33,10 @@ public class ActivityMain extends AppCompatActivity {
                 .load(R.drawable.background)
                 .centerCrop()
                 .into(background);
+    }
+
+
+    public void addDrop(View view) {
+        Toast.makeText(ActivityMain.this, "There is nothing to perform here !", Toast.LENGTH_SHORT).show();
     }
 }
