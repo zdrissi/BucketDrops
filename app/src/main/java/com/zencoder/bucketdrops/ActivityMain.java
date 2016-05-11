@@ -2,41 +2,54 @@ package com.zencoder.bucketdrops;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.zencoder.bucketdrops.adapters.AdapterDrops;
 
+//TODO add a layout manager for the RecyclerView
 public class ActivityMain extends AppCompatActivity {
 
-    private Toolbar mToolbar;
+    Toolbar mToolbar;
+    Button mBtnAdd;
+    RecyclerView mRecycler;
+    private View.OnClickListener mBtnAddListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            showDialogAdd();
+        }
+    };
+
+    private void showDialogAdd() {
+        DialogAdd dialog = new DialogAdd();
+        dialog.show(getSupportFragmentManager(), "Add");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
+        mBtnAdd = (Button) findViewById(R.id.btn_add);
 
+        mRecycler = (RecyclerView) findViewById(R.id.rv_drops);
+        mRecycler.setAdapter(new AdapterDrops(this));
+
+        mBtnAdd.setOnClickListener(mBtnAddListener);
+        setSupportActionBar(mToolbar);
         initBackgroundImage();
     }
 
-    /**
-     * Inits the background image with Glide
-     */
     private void initBackgroundImage() {
         ImageView background = (ImageView) findViewById(R.id.iv_background);
         Glide.with(this)
                 .load(R.drawable.background)
                 .centerCrop()
                 .into(background);
-    }
-
-
-    public void addDrop(View view) {
-        Toast.makeText(ActivityMain.this, "There is nothing to perform here !", Toast.LENGTH_SHORT).show();
     }
 }
